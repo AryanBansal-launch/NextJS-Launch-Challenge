@@ -1,3 +1,4 @@
+//Challenge 1:point 1
 import Image from 'next/image';
 import { GetStaticProps } from 'next';
 

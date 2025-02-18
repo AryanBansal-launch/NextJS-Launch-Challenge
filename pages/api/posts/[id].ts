@@ -1,3 +1,4 @@
+//Challenge 1:point 3
 import type { NextApiRequest, NextApiResponse } from "next";
 
 interface Post {
@@ -5,7 +6,7 @@ interface Post {
   id: number;
   title: string;
   body: string;
-  timestamp: string; // Extra field
+  timestamp: string; // Timestamp
 }
 type ErrorResponse = { error: string };
 

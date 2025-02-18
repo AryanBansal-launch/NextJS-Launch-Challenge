@@ -1,3 +1,4 @@
+//Challenge 1:point 2
 import React from 'react';
 import { GetServerSideProps } from 'next';
 

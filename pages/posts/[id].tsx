@@ -1,3 +1,4 @@
+//Challenge 1:point 4
 import { GetStaticProps, GetStaticPaths } from "next";
 
 interface Post {
@@ -38,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 export const getStaticProps: GetStaticProps = async ({params}) => {
   const postId = params?.id;
-  const url = `https://jsonplaceholder.typicode.com/posts/${postId}`;
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts/${postId}`;
   const response = await fetch(url);
   const data: Post = await response.json();
   return {
