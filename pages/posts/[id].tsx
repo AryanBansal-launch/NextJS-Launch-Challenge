@@ -22,6 +22,20 @@ const PostPage = ({ post }: { post: Post }) => {
 
 export default PostPage;
 
+
+//this will do for all paths dynamically
+export const getStaticPaths: GetStaticPaths = async () => {
+    return {
+      paths: [
+        { params: { id: '1' } },
+        { params: { id: '2' } },
+        { params: { id: '3' } },
+        { params: { id: '4' } },
+        { params: { id: '5' } },
+      ],
+      fallback:'blocking', 
+    };
+  };
 export const getStaticProps: GetStaticProps = async ({params}) => {
   const postId = params?.id;
   const url = `https://jsonplaceholder.typicode.com/posts/${postId}`;
@@ -31,6 +45,6 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     props: {
       post: data,
     },
-    revalidate: 10
+    revalidate: 10,
   };
 };
