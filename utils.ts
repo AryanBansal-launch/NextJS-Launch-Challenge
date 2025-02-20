@@ -35,7 +35,7 @@ export const getContentRes = async (): Promise<any> => {
         }, 
       }
     );
-    console.log("Response from backend:", response);
+    // console.log("Response from backend:", response);
     if (!response.ok) {
       throw new Error(`Failed to fetch Content data: ${response.statusText}`);
     }
@@ -43,6 +43,33 @@ export const getContentRes = async (): Promise<any> => {
     const data = await response.json();
     return data.content_type;
   };
+  
+
+  //Generalized fetch wrapper function
+//   export async function fetchWrapper(
+//     url: string,
+//     body?: object,
+//     method: string = "GET"
+//   ) {
+//     const options: RequestInit = {
+//       method,
+//       headers: { "Content-Type": "application/json" },
+//     };
+//     if (body && method !== "GET") {
+//       options.body = JSON.stringify(body);
+//     }
+  
+//     try {
+//       const response = await fetch(url, options);
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! Status: ${response.status}`);
+//       }
+//       return await response.json();
+//     } catch (error) {
+//       console.error("Fetch error:", error);
+//       throw error;
+//     }
+//   }
   
 export default Stack;
 

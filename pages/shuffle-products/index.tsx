@@ -7,7 +7,7 @@ interface Product {
   uid: string;
   brand: string;
   equipment: string;
-  randomNum: number; // random number field
+  randomNum: number; 
 }
 
 const ShuffleProducts = ({ product }: { product: Product }) => {
@@ -25,6 +25,7 @@ const ShuffleProducts = ({ product }: { product: Product }) => {
 };
 
 export default ShuffleProducts;
+
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {

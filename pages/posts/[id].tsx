@@ -49,3 +49,4 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
     revalidate: 10,
   };
 };
+
