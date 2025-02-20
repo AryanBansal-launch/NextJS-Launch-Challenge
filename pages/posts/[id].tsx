@@ -8,6 +8,7 @@ interface Post {
   body: string;
   timestamp: string; 
 }
+export const revalidate = 10;
 const PostPage = ({ post }: { post: Post }) => {
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
@@ -37,18 +38,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       fallback:'blocking', 
     };
   };
-// export const getStaticProps: GetStaticProps = async ({params}) => {
-//   const postId = params?.id;
-//   const url = `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts/${postId}`;
-//   const response = await fetch(url);
-//   const data: Post = await response.json();
-//   return {
-//     props: {
-//       post: data,
-//     },
-//     revalidate: 10,
-//   };
-// };
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postId = params?.id;
   const url = `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts/${postId}`;
