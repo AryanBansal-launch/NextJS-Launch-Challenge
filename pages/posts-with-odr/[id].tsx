@@ -3,7 +3,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import { useState } from "react";
 
 interface Post {
-  id: number;
+  id: string;
   title: string;
   body: string;
   timestamp: string;
