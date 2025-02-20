@@ -3,10 +3,10 @@ import { GetStaticProps, GetStaticPaths } from "next";
 
 interface Post {
   userId: number;
-  id: string;
+  id: number;
   title: string;
   body: string;
-  timestamp: string; //timestamp
+  timestamp: string; 
 }
 const PostPage = ({ post }: { post: Post }) => {
   return (
@@ -28,25 +28,42 @@ export default PostPage;
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
       paths: [
-        { params: { id: '1' } },
-        { params: { id: '2' } },
-        { params: { id: '3' } },
-        { params: { id: '4' } },
-        { params: { id: '5' } },
+        { params: { id: "1" } },
+        { params: { id: "2" } },
+        { params: { id: "3" } },
+        { params: { id: "4" } },
+        { params: { id: "5" } },
       ],
       fallback:'blocking', 
     };
   };
-export const getStaticProps: GetStaticProps = async ({params}) => {
+// export const getStaticProps: GetStaticProps = async ({params}) => {
+//   const postId = params?.id;
+//   const url = `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts/${postId}`;
+//   const response = await fetch(url);
+//   const data: Post = await response.json();
+//   return {
+//     props: {
+//       post: data,
+//     },
+//     revalidate: 10,
+//   };
+// };
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postId = params?.id;
   const url = `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts/${postId}`;
-  const response = await fetch(url);
-  const data: Post = await response.json();
-  return {
-    props: {
-      post: data,
-    },
-    revalidate: 10,
-  };
+
+  console.log("posts url Fetching from:", url);
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`API responded with status: ${response.status}`);
+
+    const data: Post = await response.json();
+    return { props: { post: data }, revalidate: 10 };
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return { notFound: true };
+  }
 };
 

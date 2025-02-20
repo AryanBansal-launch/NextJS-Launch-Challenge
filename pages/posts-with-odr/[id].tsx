@@ -3,7 +3,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import { useState } from "react";
 
 interface Post {
-  id: string;
+  id: number;
   title: string;
   body: string;
   timestamp: string;
@@ -15,11 +15,14 @@ const PostPage = ({ post }: { post: Post }) => {
   const handleRevalidate = async () => {
     setMessage("");
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate?secret=${process.env.MY_SECRET_TOKEN}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: post.id }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate?secret=${process.env.MY_SECRET_TOKEN}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: post.id }),
+      }
+    );
 
     const data = await response.json();
     if (data.revalidated) {
@@ -63,14 +66,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = params?.id;
   if (!id) return { notFound: true };
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts/${id}`
-  );
-  const post = await res.json();
-
-  return {
-    props: { post },
-    revalidate: 40,
-  };
+  const url = `${process.env.NEXT_PUBLIC_SITE_URL}/api/posts/${id}`;
+  console.log("posts-with-odr Fetching from:", url);
+  try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`API responded with status: ${res.status}`);
+        const post:Post = await res.json();
+        return {
+            props: { post },
+            revalidate: 40,
+          };
+  } catch (error) {
+    console.error("Fetch failed:", error);
+    return { notFound: true };
+  }
 };
