@@ -3,7 +3,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 
 interface Post {
   userId: number;
-  id: number;
+  id: string;
   title: string;
   body: string;
   timestamp: string; //timestamp
