@@ -8,7 +8,6 @@ interface Post {
   body: string;
   timestamp: string; 
 }
-export const revalidate = 0;
 const PostPage = ({ post }: { post: Post }) => {
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
