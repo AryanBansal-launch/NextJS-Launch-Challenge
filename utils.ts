@@ -25,7 +25,7 @@ export const setLivePreviewQueryParams = (queryParams: Partial<LivePreviewQuery>
 
 export const getContentRes = async (): Promise<any> => {
     const response = await fetch(
-      `https://cdn.contentstack.io/v3/content_types/character`,
+      `https://cdn.contentstack.io/v3/content_types/character/entries/blt83235b1e7776f575`,
       {
         method: "GET",
         headers: {
@@ -41,35 +41,10 @@ export const getContentRes = async (): Promise<any> => {
     }
   
     const data = await response.json();
-    return data.content_type;
+    console.log("Content type data:",data.entry);
+    return data.entry;
   };
   
-
-  //Generalized fetch wrapper function
-//   export async function fetchWrapper(
-//     url: string,
-//     body?: object,
-//     method: string = "GET"
-//   ) {
-//     const options: RequestInit = {
-//       method,
-//       headers: { "Content-Type": "application/json" },
-//     };
-//     if (body && method !== "GET") {
-//       options.body = JSON.stringify(body);
-//     }
-  
-//     try {
-//       const response = await fetch(url, options);
-//       if (!response.ok) {
-//         throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
-//       return await response.json();
-//     } catch (error) {
-//       console.error("Fetch error:", error);
-//       throw error;
-//     }
-//   }
   
 export default Stack;
 
