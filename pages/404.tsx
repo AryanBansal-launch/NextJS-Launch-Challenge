@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function Custom404() {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gray-100 px-6">
@@ -6,12 +7,12 @@ export default function Custom404() {
         <p className="text-lg text-gray-600 mt-2">
           The page you’re looking for doesn’t exist or has been moved.
         </p>
-        <a
+        <Link
           href="/"
           className="mt-6 px-6 py-3 bg-red-500 text-white text-lg rounded-lg shadow-md hover:bg-gray-600 transition-all duration-300"
         >
           🔙 Go Back Home
-        </a>
+        </Link>
       </div>
     );
   }
