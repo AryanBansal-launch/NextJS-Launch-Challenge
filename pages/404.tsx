@@ -9,7 +9,7 @@ export default function Custom404() {
         </p>
         <Link
           href="/"
-          className="mt-6 px-6 py-3 bg-red-500 text-white text-lg rounded-lg shadow-md hover:bg-gray-600 transition-all duration-300"
+          className="mt-6 px-6 py-3 bg-red-500 text-white text-lg rounded-lg shadow-md hover:bg-gray-300 transition-all duration-300"
         >
           🔙 Go Back Home
         </Link>
