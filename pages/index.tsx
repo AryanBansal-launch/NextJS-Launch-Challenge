@@ -12,10 +12,10 @@ interface Movie {
 
 export default function Home({ movies }: { movies: Movie[] }) {
   return (
-    <div style={{ textAlign: 'center', padding: '20px' }}>
-      <h1>Ben-10: The Animated Series</h1>
-      <Image src="/cartoon.jpg" alt="Ben-10" width={400} height={300} />
-      <h2>Some Other Movies</h2>
+    <div style={{ textAlign: 'center', padding: '20px',display:'flex',flexDirection:'column',alignItems:'center' }}>
+      <h1 style={{ fontSize: '40px', margin: '20px 0' }}>Cartoon: Ben 10</h1>
+      <Image src="/cartoon.jpg" alt="Ben-10" width={500} height={500} />
+      <h2 style={{ fontSize: '40px', margin: '20px 0' , marginTop:'100px'}}>Some Other Movies</h2>
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {movies.map((movie) => (
           <li key={movie.id} style={{ fontSize: '18px', margin: '10px 0' }}>

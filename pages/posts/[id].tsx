@@ -6,37 +6,40 @@ interface Post {
   id: number;
   title: string;
   body: string;
-  timestamp: string; 
+  timestamp: string;
 }
 const PostPage = ({ post }: { post: Post }) => {
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>📝 Post {post.id}</h1>
-      <h2>{post.title}</h2>
-      <p>{post.body}</p>
-      <p>
-        <strong>Timestamp:</strong> {post.timestamp}
-      </p>
+    <div className="flex flex-col items-center justify-center min-h-screen p-6 text-center">
+      <div className="p-6 max-w-2xl mx-auto text-center bg-white shadow-lg rounded-lg">
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          📝 Post {post.id}
+        </h1>
+        <h2 className="text-2xl font-semibold text-blue-600">{post.title}</h2>
+        <p className="text-gray-700 mt-4">{post.body}</p>
+        <p className="text-red-700 font-bold text-lg mt-4">
+          <strong>Timestamp:</strong> {post.timestamp}
+        </p>
+      </div>
     </div>
   );
 };
 
 export default PostPage;
 
-
 //this will do for all paths dynamically
 export const getStaticPaths: GetStaticPaths = async () => {
-    return {
-      paths: [
-        { params: { id: "1" } },
-        { params: { id: "2" } },
-        { params: { id: "3" } },
-        { params: { id: "4" } },
-        { params: { id: "5" } },
-      ],
-      fallback:'blocking', 
-    };
+  return {
+    paths: [
+      { params: { id: "1" } },
+      { params: { id: "2" } },
+      { params: { id: "3" } },
+      { params: { id: "4" } },
+      { params: { id: "5" } },
+    ],
+    fallback: "blocking",
   };
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postId = params?.id;
@@ -46,7 +49,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   try {
     const response = await fetch(url);
-    if (!response.ok) throw new Error(`API responded with status: ${response.status}`);
+    if (!response.ok)
+      throw new Error(`API responded with status: ${response.status}`);
 
     const data: Post = await response.json();
     return { props: { post: data }, revalidate: 10 };
@@ -55,4 +59,3 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return { notFound: true };
   }
 };
-
