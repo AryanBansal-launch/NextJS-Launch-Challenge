@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { id, secret } = req.body;
 
   // Validate Secret Key
-  if (secret !== process.env.NEXT_PUBLIC_REVALIDATE_SECRET) {
+  if (secret !== process.env.MY_SECRET_TOKEN) {
     return res.status(401).json({ message: "Invalid secret key" });
   }
 
