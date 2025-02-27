@@ -1,6 +1,6 @@
 // //Challenge 1:point 5
 // import { GetStaticProps, GetStaticPaths } from "next";
-// import { useState } from "react";
+import { useState } from "react";
 
 // interface Post {
 //   id: number;
@@ -94,7 +94,6 @@
 //   }
 // };
 import { GetServerSideProps } from "next";
-import { useState } from "react";
 
 interface Post {
   id: number;
@@ -103,18 +102,18 @@ interface Post {
   timestamp: string;
 }
 
-const PostPage = ({ post }: { post: Post }) => {
+const PostPage = ({ post }: { post: Post}) => {
   const [message, setMessage] = useState("");
 
   const handleRevalidate = async () => {
     setMessage("");
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate?secret=${process.env.MY_SECRET_TOKEN}`,
+      `${process.env.NEXT_PUBLIC_SITE_URL}/api/revalidate`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: post.id }),
+        body: JSON.stringify({ id: post.id , secret: process.env.NEXT_PUBLIC_MY_SECRET_TOKEN}),
       }
     );
 
@@ -147,7 +146,7 @@ const PostPage = ({ post }: { post: Post }) => {
           className="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition"
         >
           Revalidate Post
-        </button>
+        </button> 
 
         {message && (
           <p className="mt-3 text-green-600 font-medium">{message}</p>
@@ -173,11 +172,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (!res.ok) throw new Error(`API responded with status: ${res.status}`);
     const post: Post = await res.json();
 
-    // Set Cache-Control headers to allow caching at the CDN level for 40s
-    context.res.setHeader("Cache-Control", "max-age=0, s-maxage=40, stale-while-revalidate");
+    // Cache-Control headers to allow caching at the CDN level for 40s
+    context.res.setHeader("Cache-Control", "max-age=0, s-maxage=40");
 
     return {
-      props: { post },
+      props: {post},
     };
   } catch (error) {
     console.error("Fetch failed:", error);
