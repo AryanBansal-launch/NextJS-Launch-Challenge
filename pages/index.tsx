@@ -25,7 +25,7 @@ export default function Home({ movies }: { movies: Movie[] }) {
           </li>
         ))}
       </ul>
-      <Link href="/blog">Go to blog</Link>
+      <Link href="/shuffle-products">Go to shuffle products</Link>
     </div>
   );
 }
