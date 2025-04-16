@@ -9,11 +9,11 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: '/blog',
+        source: '/shuffle-products',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=0, s-maxage=86400',
+            value: 'max-age=0, s-maxage=86400',
           },
         ],  
       },
