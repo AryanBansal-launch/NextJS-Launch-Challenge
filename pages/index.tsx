@@ -1,6 +1,7 @@
 //Challenge 1:point 1
 import Image from 'next/image';
 import { GetStaticProps } from 'next';
+import Link from 'next/link';
 
 interface Movie {
   id: number;
@@ -24,6 +25,7 @@ export default function Home({ movies }: { movies: Movie[] }) {
           </li>
         ))}
       </ul>
+      <Link href="/blog">Go to blog</Link>
     </div>
   );
 }
