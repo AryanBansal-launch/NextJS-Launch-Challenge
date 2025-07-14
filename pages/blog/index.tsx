@@ -17,7 +17,7 @@ export const getStaticProps: GetStaticProps<BlogProps> = async () => {
   return {
     props: {
       posts: data,
-    }// Regenerate the page at most once every 10 seconds
+    }
   };
 };
 
