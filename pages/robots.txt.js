@@ -4,7 +4,7 @@ export async function getServerSideProps({ res }) {
   Allow: /
   
   User-agent: ClaudeBot
-  Allow: /
+  Disallow: /
   
   User-agent: *
   Disallow:
