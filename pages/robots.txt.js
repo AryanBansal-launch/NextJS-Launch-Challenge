@@ -1,7 +1,7 @@
 export async function getServerSideProps({ res }) {
     const content = `
   User-agent: GPTBot
-  Allow: /
+  Disallow: /
   
   User-agent: ClaudeBot
   Disallow: /
