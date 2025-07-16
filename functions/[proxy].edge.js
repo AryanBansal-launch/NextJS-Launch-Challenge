@@ -15,10 +15,8 @@ const KNOWN_BOTS = ['ClaudeBot', 'GPTBot', 'Googlebot', 'Bingbot', 'AhrefsBot'];
 
 export default function handler(request, context) {
   const userAgent = request.headers.get('user-agent') || '';
-  for (const bot of KNOWN_BOTS) {
-    if (userAgent.includes(bot)) {
-      return new Response('Forbidden: AI crawlers are not allowed.', { status: 403 });
-    }
+  if (KNOWN_BOTS.some(bot => userAgent.includes(bot))) {
+    return new Response('Forbidden: AI crawlers are not allowed.', { status: 403 });
   }
   return fetch(request);
 } 
