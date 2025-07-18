@@ -1,8 +1,8 @@
 {
     "redirects": [
       {
-        "source": "https://nextjs-launch-challenge-eee898.devcontentstackapps.com/:path(.*)",
-        "destination": "https://some-reverse-proxy-host.com/:path",
+        "source": "https://nextjs-launch-challenge-eee898.devcontentstackapps.com/test1",
+        "destination": "https://nextjs-launch-challenge-eee898.devcontentstackapps.com/test2",
         "statusCode": 308
       }
     ]
