@@ -11,12 +11,17 @@
 //     return fetch(request)
 // } 
 
-const KNOWN_BOTS = ['ClaudeBot', 'GPTBot', 'Googlebot', 'Bingbot', 'AhrefsBot'];
+export default async function handler(request) {
+  const redirectHosts = [
+    'nextjs-launch-challenge-test.devcontentstackapps.com',
+  ];
 
-export default function handler(request, context) {
-  const userAgent = request.headers.get('user-agent') || '';
-  if (KNOWN_BOTS.some(bot => userAgent.includes(bot))) {
-    return new Response('Forbidden: AI crawlers are not allowed.', { status: 403 });
+  const url = new URL(request.url);
+
+  if (redirectHosts.includes(url.hostname)) {
+    url.hostname = 'www.csnonprod.com';
+    return Response.redirect(url.toString(), 308);
   }
+
   return fetch(request);
-} 
+}
