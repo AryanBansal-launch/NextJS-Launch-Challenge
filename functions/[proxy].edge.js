@@ -26,6 +26,8 @@
 //   return fetch(request);
 // }
 
+
+//OUR REWRITE LOGIC
 // export default async function handler(request) {
 //   const url = new URL(request.url);
 //   const path = url.pathname.toString();
@@ -49,6 +51,7 @@
 //   return fetch(request);
 // }
 
+//NAEEM SIR REWRITE LOGIC
 export default async function handler(request) {
   return await main(request);
   // context.waitUntil(main(request, context));
@@ -58,6 +61,7 @@ const main = async (request) => {
 
   const parsedUrl = new URL(request?.url);
   const pathname = parsedUrl?.pathname.toString();
+  console.log('url', parsedUrl);
   console.log(pathname);
   if(pathname.startsWith('/academy')){
     console.log('inside academy path');
