@@ -26,25 +26,63 @@
 //   return fetch(request);
 // }
 
+// export default async function handler(request) {
+//   const url = new URL(request.url);
+//   const path = url.pathname.toString();
+//   console.log(path);
+//   if(path.startsWith('/academy')){
+//     console.log('inside the /academy if path');
+//     try {
+//       const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${path}`;
+//       console.log('rewrittenUrl', rewrittenUrl);
+//       const response = await fetch(new Request(rewrittenUrl, request));
+//       console.log('response status', response.clone().status);
+//       //console.log('response body', await response.clone().text());
+//       return response;
+//     } catch (error) {
+//       console.log('error', error);
+//       return new Response('Error with rewrite', { status: 500 });
+//     }
+//   }
+
+//   // Return the original request for non-academy paths
+//   return fetch(request);
+// }
+
 export default async function handler(request) {
-  const url = new URL(request.url);
-  const path = url.pathname.toString();
-  console.log(path);
-  if(path.startsWith('/academy')){
-    console.log('inside the /academy if path');
-    try {
-      const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${path}`;
+  return await main(request);
+  // context.waitUntil(main(request, context));
+}
+
+const main = async (request) => {
+
+  const parsedUrl = new URL(request?.url);
+  const pathname = parsedUrl?.pathname.toString();
+  console.log(pathname);
+  if(pathname.startsWith('/academy')){
+    console.log('inside academy path');
+    try{
+      const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${pathname}`;
       console.log('rewrittenUrl', rewrittenUrl);
       const response = await fetch(new Request(rewrittenUrl, request));
       console.log('response status', response.clone().status);
       //console.log('response body', await response.clone().text());
       return response;
-    } catch (error) {
+    }catch(error){
       console.log('error', error);
-      return new Response('Error with rewrite', { status: 500 });
+      return new Response('Error fetchign rewrite', { status: 500 });
     }
   }
-
-  // Return the original request for non-academy paths
+  console.log('skipped academy path');
   return fetch(request);
 }
+
+
+
+
+
+
+
+
+
+
