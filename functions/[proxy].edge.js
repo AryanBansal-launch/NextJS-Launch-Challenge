@@ -105,6 +105,7 @@ const main = async (request) => {
       },
     });
   }
+  return fetch(request);
 }
 
 
