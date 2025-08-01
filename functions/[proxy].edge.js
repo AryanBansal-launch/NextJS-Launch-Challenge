@@ -57,30 +57,55 @@ export default async function handler(request) {
   // context.waitUntil(main(request, context));
 }
 
+// const main = async (request) => {
+
+//   const parsedUrl = new URL(request?.url);
+//   const pathname = parsedUrl?.pathname.toString();
+//   console.log('url', parsedUrl);
+//   console.log(pathname);
+//   if(pathname.startsWith('/academy')){
+//     console.log('inside academy path');
+//     try{
+//       const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${pathname}`;
+//       console.log('rewrittenUrl', rewrittenUrl);
+//       const response = await fetch(new Request(rewrittenUrl, request));
+//       console.log('response status', response.clone().status);
+//       //console.log('response body', await response.clone().text());
+//       return response;
+//     }catch(error){
+//       console.log('error', error);
+//       return new Response('Error fetchign rewrite', { status: 500 });
+//     }
+//   }
+//   console.log('skipped academy path');
+//   return fetch(request);
+// }
+
+
 const main = async (request) => {
 
-  const parsedUrl = new URL(request?.url);
-  const pathname = parsedUrl?.pathname.toString();
-  console.log('url', parsedUrl);
-  console.log(pathname);
-  if(pathname.startsWith('/academy')){
-    console.log('inside academy path');
-    try{
-      const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${pathname}`;
-      console.log('rewrittenUrl', rewrittenUrl);
-      const response = await fetch(new Request(rewrittenUrl, request));
-      console.log('response status', response.clone().status);
-      //console.log('response body', await response.clone().text());
-      return response;
-    }catch(error){
-      console.log('error', error);
-      return new Response('Error fetchign rewrite', { status: 500 });
-    }
-  }
-  console.log('skipped academy path');
-  return fetch(request);
-}
+  const url = new URL(request.url);
+  const pathname = url.pathname;
 
+  let rewrittenUrl = request.url;
+  if(pathname.startsWith('/academy')){
+    rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${pathname}`;
+
+    const response = await fetch(new Request(rewrittenUrl, request));
+    if (!response.ok) {
+      return new Response(`Error: ${response.status}`, { status: response.status });
+    }
+
+    const responseBody = await response.text();
+
+    return new Response(responseBody, {
+      status: 200,
+      headers: {
+        'content-type': response.headers.get('content-type') || 'text/html',
+      },
+    });
+  }
+}
 
 
 
