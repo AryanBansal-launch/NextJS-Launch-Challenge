@@ -66,7 +66,7 @@ const main = async (request) => {
   if(pathname.startsWith('/academy')){
     console.log('inside academy path');
     try{
-      const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${pathname}`;
+      const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com`;
       console.log('rewrittenUrl', rewrittenUrl);
       const response = await fetch(new Request(rewrittenUrl, request));
       console.log('response status', response.clone().status);
