@@ -1,15 +1,15 @@
-export default function handler(request) {
-  // console.log('edge API called')
-    const parsedUrl = new URL(request.url);
-    const route = parsedUrl.pathname;
-    if (route === '/appliances') {
-      const response = {
-        time: new Date()
-      }
-      return new Response(JSON.stringify(response))
-    }
-    return fetch(request)
-} 
+// export default function handler(request) {
+//   // console.log('edge API called')
+//     const parsedUrl = new URL(request.url);
+//     const route = parsedUrl.pathname;
+//     if (route === '/appliances') {
+//       const response = {
+//         time: new Date()
+//       }
+//       return new Response(JSON.stringify(response))
+//     }
+//     return fetch(request)
+// } 
 
 // export default async function handler(request) {
 //   const redirectHosts = [
@@ -52,10 +52,10 @@ export default function handler(request) {
 // }
 
 //NAEEM SIR REWRITE LOGIC
-// export default async function handler(request) {
-//   return await main(request);
-//   // context.waitUntil(main(request, context));
-// }
+export default async function handler(request) {
+  return await main(request);
+  // context.waitUntil(main(request, context));
+}
 
 // const main = async (request) => {
 
@@ -82,30 +82,30 @@ export default function handler(request) {
 // }
 
 
-// const main = async (request) => {
+const main = async (request) => {
 
-//   const url = new URL(request?.url);
-//   const pathname = url?.pathname.toString();
+  const url = new URL(request?.url);
+  const pathname = url?.pathname.toString();
 
-//   if(pathname.startsWith('/academy')){
-//     const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${pathname}`;
+  if(pathname.startsWith('/academy')){
+    const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${pathname}`;
 
-//     const response = await fetch(new Request(rewrittenUrl, request));
-//     if (!response.ok) {
-//       return new Response(`Error: ${response.status}`, { status: response.status });
-//     }
+    const response = await fetch(new Request(rewrittenUrl, request));
+    if (!response.ok) {
+      return new Response(`Error: ${response.status}`, { status: response.status });
+    }
 
-//     const responseBody = await response.text();
+    const responseBody = await response.text();
 
-//     return new Response(responseBody, {
-//       status: 200,
-//       headers: {
-//         'content-type': response.headers.get('content-type') || 'text/html',
-//       },
-//     });
-//   }
-//   return fetch(request);
-// }
+    return new Response(responseBody, {
+      status: 200,
+      headers: {
+        'content-type': response.headers.get('content-type') || 'text/html',
+      },
+    });
+  }
+  return fetch(request);
+}
 
 
 
