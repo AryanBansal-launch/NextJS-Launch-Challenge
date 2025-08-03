@@ -84,12 +84,11 @@ export default async function handler(request) {
 
 const main = async (request) => {
 
-  const url = new URL(request.url);
-  const pathname = url.pathname;
+  const url = new URL(request?.url);
+  const pathname = url?.pathname;
 
-  let rewrittenUrl = request.url;
   if(pathname.startsWith('/academy')){
-    rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${pathname}`;
+    const rewrittenUrl = `https://contentstack-com-academy-dev.contentstackapps.com${pathname}`;
 
     const response = await fetch(new Request(rewrittenUrl, request));
     if (!response.ok) {
