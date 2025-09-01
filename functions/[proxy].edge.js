@@ -1,5 +1,5 @@
 export default async function handler(request) {
-  const timestamp = new Date.now().toISOString();
+  const timestamp = Date.now();
   console.log('edge API called', 'Time:', timestamp);
 
   const parsedUrl = new URL(request.url);
