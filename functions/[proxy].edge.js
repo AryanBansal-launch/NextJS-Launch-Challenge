@@ -1,24 +1,12 @@
 export default async function handler(request) {
-  // const timestamp = Date.now();
-  // console.log('edge API called', 'Time:', timestamp);
+  const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+  const finalres = await res.json();
 
-  // const parsedUrl = new URL(request.url);
-  // const route = parsedUrl.pathname;
-
-  // if (route === '/appliances') {
-  //   const response = {
-  //     time: new Date().toISOString()
-  //   };
-  //   return new Response(JSON.stringify(response), {
-  //     headers: { 'Content-Type': 'application/json' },
-  //   });
-  // }
-  const res= await fetch('https://jsonplaceholder.typicode.com/todos/1');
-  const finalres=await res.json();
-  return finalres;
-  // Fallback: proxy the request
-  // return fetch(request);
+  return new Response(JSON.stringify(finalres), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
+
 
 
 // export default async function handler(request) {
