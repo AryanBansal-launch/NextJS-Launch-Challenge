@@ -1,12 +1,32 @@
+// export default async function handler(request) {
+//   const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+//   const finalres = await res.json();
+
+//   return new Response(JSON.stringify(finalres), {
+//     headers: { 'Content-Type': 'application/json' },
+//   });
+// }
+
 export default async function handler(request) {
-  const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
-  const finalres = await res.json();
-
-  return new Response(JSON.stringify(finalres), {
-    headers: { 'Content-Type': 'application/json' },
-  });
+  const url = new URL(request.url);
+  const hostname = url.hostname;
+  if(hostname.includes('nextjs-launch-challenge-test.devcontentstackapps.com')){
+    //implement password protection
+    const username= prompt('Enter username');
+    const password= prompt('Enter password');
+    if(username === 'admin' && password === 'admin'){
+      return await fetch(request);
+    }
+    else{
+      return new Response('Unauthorized', { status: 401 });
+    }
+  }
+  else if(hostname.includes('test-domain.devcontentstackapps.com')){
+    return await fetch(request);
+  }
+  return fetch(request);
+  
 }
-
 
 
 // export default async function handler(request) {
