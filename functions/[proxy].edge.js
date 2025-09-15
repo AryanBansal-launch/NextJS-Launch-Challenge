@@ -1,17 +1,36 @@
 export default async function handler(request) {
   try {
-    const res = await fetch(`${request.url.split('/api')[0]}/api/hello`);
-    const finalres = await res.json();
-    return new Response(JSON.stringify(finalres), {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const headers = new Headers();
+    headers.set("Host", "https://test-domain.devcontentstackapps.com");
+
+    // Ask the origin to return JSON (helps avoid content-negotiation issues)
+    headers.set("Accept", "application/json");
+    const res = await fetch(`${request.url.split('/api')[0]}/api/hello`, { headers });
+    // Read the entire body of the response as text for logging/returning
+    const text = await res.text();
+
+    // Log status code for debugging (200, 404, etc.)
+    console.log("status", res.status);
+
+    // Log the server header returned (helps confirm origin vs CF Worker)
+    console.log("server", res.headers.get("server"));
+
+    // Log Cloudflare's cache status header (HIT, MISS, EXPIRED, etc.)
+    console.log("cf-cache-status", res.headers.get("cf-cache-status"));
+
+    // Log the first 200 characters of the body so you can quickly inspect it
+    console.log("sample", text.slice(0, 200));
+
+    // Return the fetched body back to the client, reusing the origin status
+    return new Response(text, { status: res.status });
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { 'Content-Type': 'application/json' },
-      status: 500
+      status: 500,
     });
   }
 }
+
 
 
 //CUSTOM PASSWORD PROTECTION FOR DOMAIN
