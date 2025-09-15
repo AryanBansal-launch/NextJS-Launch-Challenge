@@ -1,7 +1,7 @@
 export default async function handler(request) {
   try {
     const headers = new Headers();
-    headers.set("Host", "https://test-domain.devcontentstackapps.com");
+    headers.set("Host", "test-domain.devcontentstackapps.com");
 
     // Ask the origin to return JSON (helps avoid content-negotiation issues)
     headers.set("Accept", "application/json");
