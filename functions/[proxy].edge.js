@@ -1,62 +1,61 @@
-// export default async function handler(request) {
-//   const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
-//   const finalres = await res.json();
-
-//   return new Response(JSON.stringify(finalres), {
-//     headers: { 'Content-Type': 'application/json' },
-//   });
-// }
-
 export default async function handler(request) {
-  const url = new URL(request.url);
-  const hostname = url.hostname;
-  
-  if(hostname.includes('nextjs-launch-challenge-test.devcontentstackapps.com')){
-    // Check for Basic Authentication
-    const authHeader = request.headers.get('Authorization');
-    
-    if (!authHeader || !authHeader.startsWith('Basic ')) {
-      // Option 1: Trigger browser's native login prompt
-      return new Response('Authentication Required', { 
-        status: 401,
-        headers: {
-          'WWW-Authenticate': 'Basic realm="Protected Area - Enter admin/admin"',
-          'Content-Type': 'text/html'
-        }
-      });
-      
-      // Option 2: Redirect to custom login page (uncomment to use)
-      // return Response.redirect(`${url.origin}/login?redirect=${encodeURIComponent(request.url)}`, 302);
-    }
-    
-    try {
-      // Decode the base64 credentials
-      const base64Credentials = authHeader.split(' ')[1];
-      const credentials = atob(base64Credentials);
-      const [username, password] = credentials.split(':');
-      
-      if(username === 'admin' && password === 'admin'){
-        // Forward the request to the original destination
-        return await fetch(request);
-      } else {
-        return new Response('Unauthorized - Invalid credentials', { 
-          status: 401,
-          headers: { 'Content-Type': 'text/plain' }
-        });
-      }
-    } catch (error) {
-      return new Response('Unauthorized - Invalid auth format', { 
-        status: 401,
-        headers: { 'Content-Type': 'text/plain' }
-      });
-    }
-  }
-  else if(hostname.includes('test-domain.devcontentstackapps.com')){
-    return await fetch(request);
-  }
-  
-  return fetch(request);
+  // const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+  const res = await fetch('https://test-domain.devcontentstackapps.com/api/hello');
+  const finalres = await res.json();
+  return new Response(JSON.stringify(finalres), {
+    headers: { 'Content-Type': 'application/json' },
+  });
 }
+
+
+//CUSTOM PASSWORD PROTECTION FOR DOMAIN
+// export default async function handler(request) {
+//   const url = new URL(request.url);
+//   const hostname = url.hostname;
+  
+//   if(hostname.includes('nextjs-launch-challenge-test.devcontentstackapps.com')){
+//     // Check for Basic Authentication
+//     const authHeader = request.headers.get('Authorization');
+    
+//     if (!authHeader || !authHeader.startsWith('Basic ')) {
+//       // Option 1: Trigger browser's native login prompt
+//       return new Response('Authentication Required', { 
+//         status: 401,
+//         headers: {
+//           'WWW-Authenticate': 'Basic realm="Protected Area - Enter admin/admin"',
+//           'Content-Type': 'text/html'
+//         }
+//       });
+//     }
+    
+//     try {
+//       // Decode the base64 credentials
+//       const base64Credentials = authHeader.split(' ')[1];
+//       const credentials = atob(base64Credentials);
+//       const [username, password] = credentials.split(':');
+      
+//       if(username === 'admin' && password === 'admin'){
+//         // Forward the request to the original destination
+//         return await fetch(request);
+//       } else {
+//         return new Response('Unauthorized - Invalid credentials', { 
+//           status: 401,
+//           headers: { 'Content-Type': 'text/plain' }
+//         });
+//       }
+//     } catch {
+//       return new Response('Unauthorized - Invalid auth format', { 
+//         status: 401,
+//         headers: { 'Content-Type': 'text/plain' }
+//       });
+//     }
+//   }
+//   else if(hostname.includes('test-domain.devcontentstackapps.com')){
+//     return await fetch(request);
+//   }
+  
+//   return fetch(request);
+// } 
 
 
 // export default async function handler(request) {
