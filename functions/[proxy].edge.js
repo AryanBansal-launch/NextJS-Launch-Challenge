@@ -1,10 +1,16 @@
 export default async function handler(request) {
-  // const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
-  const res = await fetch('https://test-domain.devcontentstackapps.com/api/hello');
-  const finalres = await res.json();
-  return new Response(JSON.stringify(finalres), {
-    headers: { 'Content-Type': 'application/json' },
-  });
+  try {
+    const res = await fetch(`${request.url.split('/api')[0]}/api/hello`);
+    const finalres = await res.json();
+    return new Response(JSON.stringify(finalres), {
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { 'Content-Type': 'application/json' },
+      status: 500
+    });
+  }
 }
 
 
